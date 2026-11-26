@@ -1139,7 +1139,20 @@ class Component extends DCLogic {
 (function () {
   var c = new Component();
   c.props = { blue: '#1739E6' };
-  var start = function () { c.componentDidMount(); };
+  var start = function () {
+    c.componentDidMount();
+    var v = document.querySelector('video');
+    if (v) {
+      if (c.renderVals) c.renderVals();
+      if (c.setVideo) c.setVideo(v);
+      // Some phones (e.g. iPhone Low Power Mode) block autoplay until the visitor interacts: retry then.
+      var retry = function () {
+        if (v.paused) { var q = v.play(); if (q && q.catch) q.catch(function () {}); }
+        ['touchstart', 'scroll', 'click'].forEach(function (e) { window.removeEventListener(e, retry); });
+      };
+      ['touchstart', 'scroll', 'click'].forEach(function (e) { window.addEventListener(e, retry, { passive: true }); });
+    }
+  };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
 </script>
