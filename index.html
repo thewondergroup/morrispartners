@@ -128,19 +128,9 @@ html{scroll-behavior:smooth}
 .mp-htext{pointer-events:none}.mp-htext a,.mp-htext h1,.mp-htext p{pointer-events:auto}
 @media (max-width:900px){.mp-stage{width:100% !important;opacity:.32}.mp-stage canvas{-webkit-mask-image:none;mask-image:none}.mp-figcap{display:none !important}}
 @media (max-width:760px){
-.mp-hx{min-height:max(620px, calc(100svh - 64px)) !important;display:flex;flex-direction:column}
-.mp-stage{top:auto !important;bottom:0 !important;height:48% !important;width:100% !important;opacity:1 !important}
-.mp-htext{padding:32px 20px 0 !important;margin:0 !important}
+.mp-stage{top:auto !important;bottom:0 !important;height:420px;width:100% !important;opacity:1 !important}
+.mp-htext{padding:56px 20px 430px !important}
 .mp-htext>a[aria-label]{display:none !important}
-.mp-htext .mp-xfade>p:first-child{display:none !important}
-.mp-htext .mp-bar{display:none !important}
-.mp-htext h1{font-size:clamp(46px, 13.6vw, 60px) !important}
-.mp-htext h1+div{margin-top:20px !important;gap:22px !important}
-.mp-htext h1+div p{font-size:16px !important;line-height:1.55 !important}
-.mp-htext .mp-f2{flex-wrap:nowrap !important;gap:10px !important}
-.mp-htext .mp-f2 a{min-height:48px !important;padding:0 18px !important;font-size:14px !important;white-space:nowrap}
-.mp-htext .mp-f2 a+a{display:none !important}
-.mp-head nav .mp-btn{white-space:nowrap}
 .mp-head nav .mp-link{display:none}
 .mp-head>div{flex-wrap:nowrap !important;padding:12px 16px !important}
 .mp-head>div>a span{font-size:24px !important}
@@ -163,16 +153,6 @@ html{scroll-behavior:smooth}
 .mp-cap span:first-child{font-size:16px !important}
 .mp-cap span:nth-child(2){font-size:9px !important}
 .mp-cap p{display:none !important}
-}
-@media (max-width:380px){
-.mp-head>div>a span{font-size:21px !important}
-.mp-head nav .mp-btn{padding:10px 13px !important;font-size:12px !important;gap:6px !important}
-.mp-htext{padding-top:20px !important}
-.mp-htext h1{font-size:42px !important}
-.mp-htext h1+div{margin-top:14px !important;gap:16px !important}
-.mp-htext h1+div p{font-size:14.5px !important;line-height:1.5 !important}
-.mp-hx{min-height:max(560px, calc(100svh - 56px)) !important}
-.mp-stage{height:40% !important}
 }
 .mp-reduce .mp-pin,.mp-reduce .mp-hpin{height:auto !important}
 .mp-reduce .mp-sticky,.mp-reduce .mp-hsticky{position:relative !important;height:auto !important;padding:110px 0 !important}
@@ -952,9 +932,8 @@ class Component extends DCLogic {
       const settle = eio((t - 0.4) / 3.4);
       const rot = -0.35 - (1 - settle) * 1.9 + Math.max(0, t - 3.8) * -0.06 + mx * 0.45 + dragRot - (self.heroP || 0) * 2.6;
       const tilt = 0.48 + my * 0.16 + dragTilt + (1 - settle) * 0.25;
-      const narrow = W < 700;
-      const R = (narrow ? Math.min(W * 0.62, H * 0.92) : Math.min(W * 0.4, H * 0.41)) * (0.86 + 0.14 * intro);
-      const cx = narrow ? W * 0.5 : W * 0.57, cy = narrow ? H + R * 0.12 : H * 0.52;
+      const R = Math.min(W * 0.4, H * 0.41) * (0.86 + 0.14 * intro);
+      const cx = W * 0.57, cy = H * 0.52;
       const ct = Math.cos(tilt), st = Math.sin(tilt);
       const cr = Math.cos(rot), sr = Math.sin(rot);
       const T = (v) => {
