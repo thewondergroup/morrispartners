@@ -861,10 +861,10 @@ class Component extends DCLogic {
     }
 
     // ---- Hubs (illustrative); London is the origin of every flow
-    const city = (name, lat, lon) => ({ name, la: lat * D2R, lo: lon * D2R });
+    const city = (name, lat, lon, side) => ({ name, la: lat * D2R, lo: lon * D2R, side: side || 'r' });
     const LON = city('London', 51.51, -0.13);
     const hubs = [
-      city('New York', 40.71, -74.0), city('Toronto', 43.65, -79.38), city('São Paulo', -23.55, -46.63),
+      city('New York', 40.71, -74.0, 'b'), city('Toronto', 43.65, -79.38, 'l'), city('São Paulo', -23.55, -46.63),
       city('Lagos', 6.52, 3.38), city('Nairobi', -1.29, 36.82), city('Riyadh', 24.71, 46.68),
       city('Dubai', 25.2, 55.27), city('Mumbai', 19.08, 72.88), city('Singapore', 1.35, 103.82),
       city('Hong Kong', 22.32, 114.17), city('Tokyo', 35.68, 139.69), city('Sydney', -33.87, 151.21)
@@ -1105,7 +1105,9 @@ class Component extends DCLogic {
           const la = (p[2] - 0.35) / 0.65 * landed;
           ctx.fillStyle = home ? B(0.95 * la) : 'rgba(61,74,107,' + (0.75 * la).toFixed(3) + ')';
           ctx.font = home ? '700 11px Manrope, system-ui, sans-serif' : '600 10px Manrope, system-ui, sans-serif';
-          ctx.fillText(c.name.toUpperCase(), p[0] + 10, p[1] - 8);
+          if (c.side === 'l') { ctx.textAlign = 'right'; ctx.fillText(c.name.toUpperCase(), p[0] - 10, p[1] - 8); ctx.textAlign = 'left'; }
+          else if (c.side === 'b') ctx.fillText(c.name.toUpperCase(), p[0] + 10, p[1] + 16);
+          else ctx.fillText(c.name.toUpperCase(), p[0] + 10, p[1] - 8);
         }
       };
       hubs.forEach((h, i) => hubDraw(h, eo((t - routes[i].delay - 1.2) / 0.5), false));
